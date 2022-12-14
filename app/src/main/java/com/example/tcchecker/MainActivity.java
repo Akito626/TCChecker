@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout lay5;
     private LinearLayout lay6;
     private LinearLayout lay7;
+    private LinearLayout lay8;
 
     private static final String TAG = "MainActivity";
     private AdView adView;
@@ -91,8 +92,9 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         adView.loadAd(adq);
 
-        initSpinner();
+        initSpinner();      // スピナーを生成
 
+        // レイアウトの準備
         lay1 = findViewById(R.id.layout1);
         lay2 = findViewById(R.id.layout2);
         lay3 = findViewById(R.id.layout3);
@@ -100,8 +102,10 @@ public class MainActivity extends AppCompatActivity {
         lay5 = findViewById(R.id.layout5);
         lay6 = findViewById(R.id.layout6);
         lay7 = findViewById(R.id.layout7);
+        lay8 = findViewById(R.id.layout8);
     }
 
+    //スピナーの準備
     private void initSpinner(){
         Spinner spinner1 = findViewById(R.id.spinner1);
         Spinner spinner2 = findViewById(R.id.spinner2);
@@ -124,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 Cheker();
             }
 
-            //　アイテムが選択されなかった
+            //　アイテムが選択されなかった時
             public void onNothingSelected(AdapterView<?> parent) {
             }
         };
@@ -132,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
         spinner2.setOnItemSelectedListener(MyListener);
     }
 
+    //レイアウトを空にする
     private void ResetLayout(){
         lay1.removeAllViews();
         lay2.removeAllViews();
@@ -140,8 +145,10 @@ public class MainActivity extends AppCompatActivity {
         lay5.removeAllViews();
         lay6.removeAllViews();
         lay7.removeAllViews();
+        lay8.removeAllViews();
     }
 
+    //選択された時の処理
     public void Cheker() {
         Spinner spinner1 = findViewById(R.id.spinner1);
         Spinner spinner2 = findViewById(R.id.spinner2);
@@ -149,9 +156,9 @@ public class MainActivity extends AppCompatActivity {
         int idx1 = spinner1.getSelectedItemPosition();
         int idx2 = spinner2.getSelectedItemPosition();
 
-
-
+        // 画像の数のカウント用
         int num = 0;
+        int num2 = 0;
 
         ResetLayout();
 
@@ -168,21 +175,21 @@ public class MainActivity extends AppCompatActivity {
 
             //相性によって画像を配置
             for (int i = 0; i < 18; i++) {
-                if (comp[i] == 2) {
+                if (comp[i] == 2) {     // こうかばつぐん(×4)
                     ImageView imageview = new ImageView(this);
                     imageview.setImageResource(icon[i]);
                     LinearLayout.LayoutParams layoutParams =
                             new LinearLayout.LayoutParams(lay1.getHeight()+2, lay1.getHeight()-2);
                     imageview.setLayoutParams(layoutParams);
                     lay1.addView(imageview);
-                } else if (comp[i] == 1) {
+                } else if (comp[i] == 1) {      // こうかばつぐん(×2)
                     ImageView imageview = new ImageView(this);
                     imageview.setImageResource(icon[i]);
                     LinearLayout.LayoutParams layoutParams =
                             new LinearLayout.LayoutParams(lay2.getHeight()+2, lay2.getHeight()-2);
                     imageview.setLayoutParams(layoutParams);
                     lay2.addView(imageview);
-                } else if (comp[i] == 0) {
+                } else if (comp[i] == 0) {      // こうかあり
                     num++;
                     ImageView imageview = new ImageView(this);
                     imageview.setImageResource(icon[i]);
@@ -191,24 +198,29 @@ public class MainActivity extends AppCompatActivity {
                     imageview.setLayoutParams(layoutParams);
                     if((num+1)*(lay3.getHeight()+2) < lay3.getWidth()) {
                         lay3.addView(imageview);
-                    }else {
+                    }else {     // 横幅いっぱいになると次の段に
                         lay4.addView(imageview);
                     }
-                } else if (comp[i] == -1) {
+                } else if (comp[i] == -1) {     // いまひとつ(1/2)
+                    num2++;
                     ImageView imageview = new ImageView(this);
                     imageview.setImageResource(icon[i]);
                     LinearLayout.LayoutParams layoutParams =
                             new LinearLayout.LayoutParams(lay5.getHeight()+2, lay5.getHeight()-2);
                     imageview.setLayoutParams(layoutParams);
-                    lay5.addView(imageview);
-                } else if (comp[i] == -2) {
+                    if((num2+1)*(lay5.getHeight()+2) < lay5.getWidth()) {
+                        lay5.addView(imageview);
+                    }else {     // 横幅いっぱいになると次の段に
+                        lay8.addView(imageview);
+                    }
+                } else if (comp[i] == -2) {     // いまひとつ(1/4)
                     ImageView imageview = new ImageView(this);
                     imageview.setImageResource(icon[i]);
                     LinearLayout.LayoutParams layoutParams =
                             new LinearLayout.LayoutParams(lay6.getHeight()+2, lay6.getHeight()-2);
                     imageview.setLayoutParams(layoutParams);
                     lay6.addView(imageview);
-                } else {
+                } else {        // こうかなし
                     ImageView imageview = new ImageView(this);
                     imageview.setImageResource(icon[i]);
                     LinearLayout.LayoutParams layoutParams =
@@ -218,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-            //リセット
+            //相性計算用の配列をリセット
             for (int i = 0; i < 18; i++) comp[i] = 0;
         }
     }
