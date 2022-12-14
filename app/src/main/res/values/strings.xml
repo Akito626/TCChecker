@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">TCChecker</string>
+
+    <string-array name="list">
+        <item>-----</item>
+        <item>ノーマル</item>
+        <item>ほのお</item>
+        <item>みず</item>
+        <item>でんき</item>
+        <item>くさ</item>
+        <item>こおり</item>
+        <item>かくとう</item>
+        <item>どく</item>
+        <item>じめん</item>
+        <item>ひこう</item>
+        <item>エスパー</item>
+        <item>むし</item>
+        <item>いわ</item>
+        <item>ゴースト</item>
+        <item>ドラゴン</item>
+        <item>あく</item>
+        <item>はがね</item>
+        <item>フェアリー</item>
+    </string-array>
+
+    <string name="ads_AppId">ca-app-pub-8250351918195242~3076975543</string>
+    <string name="ads_UnitId_Banner">ca-app-pub-8250351918195242/6777419543</string>
+</resources>
