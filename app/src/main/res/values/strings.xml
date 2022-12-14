@@ -2,7 +2,7 @@
     <string name="app_name">TCChecker</string>
 
     <string-array name="list">
-        <item>-----</item>
+        <item>-------</item>
         <item>ノーマル</item>
         <item>ほのお</item>
         <item>みず</item>

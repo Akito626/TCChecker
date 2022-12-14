@@ -107,8 +107,16 @@ public class MainActivity extends AppCompatActivity {
 
     //スピナーの準備
     private void initSpinner(){
+        String [] colors = {
+                "BLACK","#b3b3b5","#e8554d","#579bf3","#f1c525","#57a747", "#68c5df",
+                "#e8a33b","#8357d0","#a6783a","#add5ea", "#ed6c94", "#a5ab39","#b2b194",
+                "#8d658e","#7482e9","#706261","#94b1c2","#e48fe3"
+        };
+
         Spinner spinner1 = findViewById(R.id.spinner1);
         Spinner spinner2 = findViewById(R.id.spinner2);
+
+        int size = 20;
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
@@ -116,9 +124,19 @@ public class MainActivity extends AppCompatActivity {
                 getResources().getStringArray(R.array.list)
         );
 
+        custom_adapter adapter2 =
+                new custom_adapter(
+                        this,
+                        R.layout.custom_spinner,
+                        getResources().getStringArray(R.array.list),
+                        colors,
+                        size
+                );
+
         adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown);
-        spinner1.setAdapter(adapter);
-        spinner2.setAdapter(adapter);
+        adapter2.setDropDownViewResource(R.layout.custom_spinner_dropdown);
+        spinner1.setAdapter(adapter2);
+        spinner2.setAdapter(adapter2);
 
         AdapterView.OnItemSelectedListener MyListener = new AdapterView.OnItemSelectedListener(){
             //　アイテムが選択された時
