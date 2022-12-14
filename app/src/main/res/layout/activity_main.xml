@@ -59,14 +59,6 @@
         android:layout_height="0dp"
         android:layout_weight="0.005" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.04"
-        android:onClick="onButton"
-        android:text="Check" />
 
     <Space
         android:layout_width="match_parent"

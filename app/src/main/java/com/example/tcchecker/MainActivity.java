@@ -116,20 +116,20 @@ public class MainActivity extends AppCompatActivity {
         spinner1.setAdapter(adapter);
         spinner2.setAdapter(adapter);
 
-        // リスナーを登録
-        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        AdapterView.OnItemSelectedListener MyListener = new AdapterView.OnItemSelectedListener(){
             //　アイテムが選択された時
             @Override
             public void onItemSelected(AdapterView<?> parent,
                                        View view, int position, long id) {
-                
+                Cheker();
             }
 
             //　アイテムが選択されなかった
             public void onNothingSelected(AdapterView<?> parent) {
-                //
             }
-        });
+        };
+        spinner1.setOnItemSelectedListener(MyListener);
+        spinner2.setOnItemSelectedListener(MyListener);
     }
 
     private void ResetLayout(){
@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
         lay7.removeAllViews();
     }
 
-    public void onButton(View view) {
+    public void Cheker() {
         Spinner spinner1 = findViewById(R.id.spinner1);
         Spinner spinner2 = findViewById(R.id.spinner2);
 
