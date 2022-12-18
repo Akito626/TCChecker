@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="bottom"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -82,10 +84,11 @@
         <TextView
             android:id="@+id/textView1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="0.8"
-            android:text="こうかばつぐん！(×4)"
-            android:textSize="20sp" />
+            android:autoSizeTextType="uniform"
+            android:padding="5dp"
+            android:text="こうかばつぐん！(×4)" />
     </LinearLayout>
 
     <LinearLayout
@@ -122,10 +125,11 @@
         <TextView
             android:id="@+id/textView2"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="0.8"
-            android:text="こうかばつぐん！(×2)"
-            android:textSize="20sp" />
+            android:autoSizeTextType="uniform"
+            android:padding="5dp"
+            android:text="こうかばつぐん！(×2)" />
     </LinearLayout>
 
     <LinearLayout
@@ -162,10 +166,11 @@
         <TextView
             android:id="@+id/textView3"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="0.8"
-            android:text="こうかあり"
-            android:textSize="20sp" />
+            android:autoSizeTextType="uniform"
+            android:padding="5dp"
+            android:text="こうかあり" />
     </LinearLayout>
 
     <LinearLayout
@@ -213,10 +218,11 @@
         <TextView
             android:id="@+id/textView4"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="0.8"
-            android:text="いまひとつ (1/2)"
-            android:textSize="20sp" />
+            android:autoSizeTextType="uniform"
+            android:padding="5dp"
+            android:text="いまひとつ (1/2)" />
     </LinearLayout>
 
     <LinearLayout
@@ -264,10 +270,11 @@
         <TextView
             android:id="@+id/textView5"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="0.8"
-            android:text="いまひとつ (1/4)"
-            android:textSize="20sp" />
+            android:autoSizeTextType="uniform"
+            android:padding="5dp"
+            android:text="いまひとつ (1/4)" />
     </LinearLayout>
 
     <LinearLayout
@@ -304,10 +311,11 @@
         <TextView
             android:id="@+id/textView6"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="0.8"
-            android:text="こうかなし"
-            android:textSize="20sp" />
+            android:autoSizeTextType="uniform"
+            android:padding="5dp"
+            android:text="こうかなし" />
     </LinearLayout>
 
     <LinearLayout
@@ -322,20 +330,23 @@
         android:paddingEnd="0dp"
         android:paddingBottom="0dp" />
 
-    <Space
+    <LinearLayout
+        android:id="@+id/adlayout"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_weight="0.03" />
-
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adv"
-        android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="0.04"
-        android:layout_gravity="center"
-        ads:adSize="BANNER"
-        ads:adUnitId="@string/ads_UnitId_Banner"
-        />
+        android:layout_weight="0.06"
+        android:orientation="horizontal">
+
+        <!--
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            ads:adSize="SMART_BANNER"
+            ads:adUnitId="@string/ads_UnitId_Banner" />
+        -->
+    </LinearLayout>
 
 </LinearLayout>
 

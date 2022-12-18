@@ -5,6 +5,7 @@ import static android.widget.ImageView.ScaleType.FIT_XY;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.Insets;
 import android.graphics.drawable.GradientDrawable;
@@ -12,7 +13,10 @@ import android.graphics.drawable.Icon;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
 import android.text.Layout;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowInsets;
 import android.view.WindowMetrics;
@@ -25,6 +29,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
@@ -37,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0},            //ノーマル
             {0, -1, 1, 0, -1, -1, 0, 0, 1, 0, 0, -1, 1, 0, 0, 0, -1, -1},       //ほのお
-            {0, -1, -1, 1, 1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1},        //みず
+            {0, -1, -1, 1, 1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0},        //みず
             {0, 0, 0, -1, 0, 0, 0, 0, 1, -1, 0, 0, 0, 0, 0, 0, -1, 0},          //でんき
             {0, 1, -1, -1, -1, 1, 0, 1, -1, 1, 0, 1, 0, 0, 0, 0, 0, 0},         //くさ
             {0, 1, 0, 0, 0, -1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0},            //こおり
@@ -74,10 +79,14 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout lay6;
     private LinearLayout lay7;
     private LinearLayout lay8;
+    private LinearLayout adlayout;
 
     private static final String TAG = "MainActivity";
     private AdView adView;
 
+    private int n = 0;
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,10 +96,12 @@ public class MainActivity extends AppCompatActivity {
         MobileAds.initialize(this,
                 initializationStatus -> {
                 });
-        adView = findViewById(R.id.adv);
-        AdRequest adq = new AdRequest.Builder()
-                .build();
-        adView.loadAd(adq);
+        adlayout = findViewById(R.id.adlayout);
+        adView = new AdView(this);
+        adView.setAdUnitId(getString(R.string.ads_UnitId_Banner));
+        adlayout.addView(adView);
+        adlayout.setGravity(Gravity.BOTTOM);
+        loadBanner();
 
         initSpinner();      // スピナーを生成
 
@@ -105,6 +116,44 @@ public class MainActivity extends AppCompatActivity {
         lay8 = findViewById(R.id.layout8);
     }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        if(n == 0) {
+            n++;
+            initSpinner();
+        }
+    }
+
+    //広告の準備
+    private void loadBanner() {
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        AdSize adSize = getAdSize();
+        // Step 4 - Set the adaptive ad size on the ad view.
+        adView.setAdSize(adSize);
+
+
+        // Step 5 - Start loading the ad in the background.
+        adView.loadAd(adRequest);
+    }
+
+    private AdSize getAdSize() {
+        // Step 2 - Determine the screen width (less decorations) to use for the ad width.
+        Display display = getWindowManager().getDefaultDisplay();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        display.getMetrics(outMetrics);
+
+        float widthPixels = outMetrics.widthPixels;
+        float density = outMetrics.density;
+
+        int adWidth = (int) (widthPixels / density);
+
+        // Step 3 - Get adaptive ad size and return for setting on the ad view.
+        return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this, adWidth);
+    }
+
     //スピナーの準備
     private void initSpinner(){
         String [] colors = {
@@ -116,15 +165,12 @@ public class MainActivity extends AppCompatActivity {
         Spinner spinner1 = findViewById(R.id.spinner1);
         Spinner spinner2 = findViewById(R.id.spinner2);
 
-        int size = 20;
+        int size = spinner1.getHeight()/5;
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this,
-                R.layout.custom_spinner,
-                getResources().getStringArray(R.array.list)
-        );
+        int sh = spinner1.getHeight();
+        Log.d("log","sh="+sh);
 
-        custom_adapter adapter2 =
+        custom_adapter adapter =
                 new custom_adapter(
                         this,
                         R.layout.custom_spinner,
@@ -134,9 +180,8 @@ public class MainActivity extends AppCompatActivity {
                 );
 
         adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown);
-        adapter2.setDropDownViewResource(R.layout.custom_spinner_dropdown);
-        spinner1.setAdapter(adapter2);
-        spinner2.setAdapter(adapter2);
+        spinner1.setAdapter(adapter);
+        spinner2.setAdapter(adapter);
 
         AdapterView.OnItemSelectedListener MyListener = new AdapterView.OnItemSelectedListener(){
             //　アイテムが選択された時

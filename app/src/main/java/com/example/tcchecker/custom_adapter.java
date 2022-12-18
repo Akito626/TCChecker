@@ -11,7 +11,7 @@ import android.widget.TextView;
 public class custom_adapter extends ArrayAdapter<String> {
     private int resourceId;
     private int resourceId2;
-    private String[] cs = {"","","","","","","","","","","","","","","","","","",""};
+    private String[] cs = new String[19];
     private int size;
 
     public custom_adapter(Context context, int resourceId, String[] items, String[] colors, int s) {
@@ -52,6 +52,7 @@ public class custom_adapter extends ArrayAdapter<String> {
         String list=this.getItem(position);
         String color = cs[position];
         tv.setText(list);
+        tv.setTextSize(size);
         tv.setTextColor(Color.WHITE);//ここでスピナ-の文字色を指定
         return convertView;
     }
